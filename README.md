@@ -1,22 +1,3 @@
-- 👋 Hi, I’m @MarcosDarpa
-- 👀 I’m interested in ...## Bem-vindo ao meu GitHub!
-
-### Sobre mim
-Olá, estou em uma jornada para me tornar um programador habilidoso e apaixonado pelo que faço. Estou sempre buscando novos desafios e aprendendo novas tecnologias.
-
-### Habilidades e Tecnologias
-- HTML5
-- CSS3
-- JavaScript
-- ...
-
-### Projetos em destaque
-- site-image
-
-- ...
-
-### Frase motivadora
-"Nunca é tarde para aprender algo novo. Comece hoje mesmo a sua jornada na programação e conquiste o mundo com suas habilidades!"
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 const ROW = 20;
@@ -74,3 +55,53 @@ let p = randomPiece();
 
 // o objeto Peça
 function Piece(tetromino, color) {
+  this.tetromino = tetromino;
+  this.color = color;
+
+  this.tetrominoN = 0; // começar a partir do primeiro padrão
+  this.activeTetromino = this.tetromino[this.tetrominoN];
+
+  // controla a posição da peça
+  this.x = 3;
+  this.y = -2;
+}
+
+// preencher a cor para a peça
+Piece.prototype.fill = function (color) {
+  for (let r = 0; r < this.activeTetromino.length; r++) {
+    for (let c = 0; c < this.activeTetromino.length; c++) {
+      // desenhe apenas as partes preenchidas da peça
+      if (this.activeTetromino[r][c]) {
+        drawSquare(this.x + c, this.y + r, color);
+      }
+    }
+  }
+};
+
+// desenhar uma peça na tela
+Piece.prototype.draw = function () {
+  this.fill(this.color);
+};
+
+// apagar a peça
+Piece.prototype.unDraw = function () {
+  this.fill(VACANT);
+};
+
+// mover para baixo a peça
+Piece.prototype.moveDown = function () {
+  if (!this.collision(0, 1, this.activeTetromino)) {
+    this.unDraw();
+    this.y++;
+    this.draw();
+  } else {
+    // trave a peça e gere uma nova peça aleatória
+    this.lock();
+    p = randomPiece();
+  }
+};
+
+// mover para a esquerda a peça
+Piece.prototype.moveLeft = function () {
+  if (!this.collision(-
+
